@@ -9,6 +9,7 @@ server.use(express.json())
 let myAvatar;
 let users = [];
 const tweets = [];
+let newTweets = [];
 
 server.post('/sign-up', (req, res) => {
     const {username, avatar} = req.body;
@@ -21,7 +22,7 @@ server.post('/sign-up', (req, res) => {
     users.push(user)
 
 
-    return res.jsonp("ok");
+    return res.jsonp(users);
 })
 
 
@@ -34,14 +35,16 @@ server.post('/tweets', (req, res) => {
     };
 
     tweets.push(newTweet)
+    let newTweets = tweets;
 
-
-    return res.jsonp("ok");
+    return res.jsonp(tweets);
 })
 
 
 server.get('/tweets', (req, res) => {
-    res.send(tweets);
+    
+    newTweets = tweets;
+    res.send(newTweets.reverse());
 })
 
 server.listen(5000)
